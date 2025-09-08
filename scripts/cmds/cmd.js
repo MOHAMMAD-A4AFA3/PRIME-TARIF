@@ -1,3 +1,4 @@
+const { GoatWrapper } = require("fca-liane-utils");
 const axios = require("axios");
 const { execSync } = require("child_process");
 const fs = require("fs-extra");
@@ -35,7 +36,7 @@ module.exports = {
 			vi: "Quản lý các tệp lệnh của bạn",
 			en: "Manage your command files"
 		},
-		category: "owner",
+		category: "ARAFAT",
 		guide: {
 			vi: "   {pn} load <tên file lệnh>"
 				+ "\n   {pn} loadAll"
@@ -97,6 +98,11 @@ module.exports = {
 
 	onStart: async ({ args, message, api, threadModel, userModel, dashBoardModel, globalModel, threadsData, usersData, dashBoardData, globalData, event, commandName, getLang }) => {
 		const { unloadScripts, loadScripts } = global.utils;
+		const ArYan = global.GoatBot.config.DEV;
+ if (!ArYan.includes(event.senderID)) {
+ api.sendMessage("❌ | 𝐎𝐧𝐥𝐲 𝐛𝐨𝐭'𝐬 𝐃𝐞𝐯𝐞𝐥𝐨𝐩𝐞𝐫 𝐜𝐚𝐧 𝐮𝐬𝐞 𝐭𝐡𝐞 𝐜𝐨𝐦𝐦𝐚𝐧𝐝", event.threadID, event.messageID);
+ return;
+			}
 		if (
 			args[0] == "load"
 			&& args.length == 2
@@ -529,3 +535,5 @@ function unloadScripts(folder, fileName, configCommands, getLang) {
 
 global.utils.loadScripts = loadScripts;
 global.utils.unloadScripts = unloadScripts;
+const wrapper = new GoatWrapper(module.exports);
+wrapper.applyNoPrefix({ allowPrefix: true });
